@@ -1,0 +1,30 @@
+//開始處理上傳資料  localpdf
+				if ( ! $this->upload->do_upload('localpdf'))
+					{
+					//$error = array('error' => $this->upload->display_errors());
+					}
+					else
+					{
+	$getDataArray = $this->upload->data();//取得資訊
+	$upFile = $upFILEload."/";
+	$filename=$upFILEload."/".$getDataArray['file_name'];
+$IM = new imagick();
+$IM->setResolution(120,120);
+$IM->setCompressionQuality(100);
+$IM->readImage($filename);
+$countnum=1;
+foreach ($IM as $Key => $Var){
+if($onlytext=='1'){
+			$Var->trimImage(0);
+			}	
+$Var->setImageFormat('png');
+$new_filename = str_replace('.pdf', '', $filename).'_'.$countnum.".pdf";
+$jpgfilename = str_replace('.pdf', '', $new_filename).'.png';
+if($Var->writeImage($jpgfilename) == true){
+$countnum++;
+if($countnum>0&&$countnum<10){
+		$order="0".$countnum;
+		}else{$order=$countnum;}		
+}
+}
+}
